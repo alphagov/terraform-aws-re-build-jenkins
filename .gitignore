@@ -1,0 +1,19 @@
+# Terraform
+**/.terraform
+**/terraform.tfstate*
+**/*.tfvars
+**/*plan*
+**/*.out
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+dependency-reduced-pom.xml

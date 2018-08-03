@@ -35,6 +35,7 @@ data "template_file" "jenkins2_worker_template" {
     fqdn          = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
     hostname      = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
     region        = "${var.aws_region}"
+    team          = "${var.team_name}"
   }
 }
 

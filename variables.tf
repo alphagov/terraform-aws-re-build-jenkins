@@ -98,12 +98,6 @@ variable "server_root_volume_size" {
   default     = "50"
 }
 
-variable "server_user_data" {
-  description = "Link to cloud init file containing setup information for Jenkins master instance. You do not need to set this - it defaults to a sensible value"
-  type        = "string"
-  default     = ""
-}
-
 variable "ssh_public_key_file" {
   description = "Path to your ssh public key file"
   type        = "string"
@@ -137,10 +131,4 @@ variable "worker_root_volume_size" {
   description = "Size of the Jenkins worker root volume (GB)"
   type        = "string"
   default     = "50"
-}
-
-variable "worker_user_data" {
-  description = "Link to cloud init file containing setup information for Jenkins worker instance. You do not need to set this - it defaults to a sensible value"
-  type        = "string"
-  default     = ""
 }

@@ -17,25 +17,26 @@ module "jenkins2_worker" {
   }]
 
   tags {
-    Environment = "${var.environment}"
-    ManagedBy   = "terraform"
-    Name        = "jenkins2_worker_ec2_${var.team_name}_${var.environment}"
-    Team        = "${var.team_name}"
-    Type        = "Jenkins-worker"
+    AvailabilityZone = "${local.configured_az}"
+    Environment      = "${var.environment}"
+    ManagedBy        = "terraform"
+    Name             = "jenkins2_worker_ec2_${var.team_name}_${var.environment}"
+    Team             = "${var.team_name}"
+    Type             = "Jenkins-worker"
   }
 }
 
 data "template_file" "jenkins2_worker_template" {
   # If user_data is defined then use this, otherwise default to cloud_init file.
-  template = "${file(coalesce(var.user_data, "${path.module}/cloud-init/worker-${var.ubuntu_release}.yaml"))}"
+  template = "${file(coalesce(var.worker_user_data, "${path.module}/cloud-init/worker-${var.ubuntu_release}.yaml"))}"
 
   vars {
-    awsenv        = "${var.environment}"
-    dockerversion = "${var.dockerversion}"
-    fqdn          = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    hostname      = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    region        = "${var.aws_region}"
-    team          = "${var.team_name}"
+    awsaz          = "${local.configured_az}"
+    awsenv         = "${var.environment}"
+    docker_version = "${var.docker_version}"
+    fqdn           = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
+    hostname       = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
+    team           = "${var.team_name}"
   }
 }
 

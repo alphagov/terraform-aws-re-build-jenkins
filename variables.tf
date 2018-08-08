@@ -1,59 +1,22 @@
-# #### DNS preferences (from https://github.com/alphagov/terraform-aws-re-build-dns)
-
-variable route53_team_zone_id {
-  description = "The Route53 zone id, obtained from using https://github.com/alphagov/terraform-aws-re-build-dns or elsewhere"
-  type        = "string"
-}
-
-# #### AWS preferences ####
-
 variable "allowed_ips" {
   description = "A list of IP addresses permitted to access the EC2 instances created that are running Jenkins"
   type        = "list"
 }
 
-variable "aws_region" {
-  description = "AWS region"
-  type        = "string"
-  default     = "eu-west-2"
-}
-
-variable "aws_az" {
-  description = "AWS availability zone. Note that this must exist in the region specified in the aws_region variable"
-  type        = "string"
-  default     = "eu-west-2a"
-}
-
-variable "aws_profile" {
-  description = "AWS profile name from ~/.aws/credentials or wherever your AWS credentials are stored"
+variable "az" {
+  description = "Single AWS availability zone to place master and worker instances in (a,b,ci)"
   type        = "string"
 }
 
-variable "instance_type" {
-  description = "This defines the default (AWS) instance type"
-  type        = "string"
-  default     = "t2.small"
-}
-
-variable "public_subnet_cidr" {
-  description = "CIDR blocks for public subnet"
-  type        = "string"
-  default     = "10.0.101.0/24"
-}
-
-variable "ssh_public_key_file" {
-  description = "Path to your ssh public key file"
+variable "docker_version" {
+  description = "Docker version to install"
   type        = "string"
 }
-
-# #### Environment preferences ####
 
 variable "environment" {
   description = "Environment (test, staging, production, etc)"
   type        = "string"
 }
-
-# #### Github preferences ####
 
 variable "github_admin_users" {
   description = "List of Github admin users"
@@ -74,7 +37,7 @@ variable "github_client_secret" {
 }
 
 variable "github_organisations" {
-  description = "List of Github organisations"
+  description = "List of Github organisations and teams that users must be a member of to allow HTTPS login to master"
   type        = "list"
   default     = []
 }
@@ -91,16 +54,37 @@ variable "gitrepo_branch" {
   default     = "master"
 }
 
-# #### Docker and Jenkins preferences ####
-
-variable "dockerversion" {
-  description = "Docker version to install"
-  type        = "string"
-}
-
 variable "hostname_suffix" {
   description = "Main part of the domain name and any subdomains to use when constructing the DNS name for the Jenkins instances"
   type        = "string"
+}
+
+variable "jenkins_version" {
+  description = "Verson of jenkins to install"
+  type        = "string"
+  default     = "latest"
+}
+
+variable "public_subnet_cidr" {
+  description = "CIDR blocks for public subnet"
+  type        = "string"
+  default     = "10.0.101.0/24"
+}
+
+variable "region" {
+  description = "AWS Region"
+  type        = "string"
+}
+
+variable "route53_team_zone_id" {
+  description = "The Route53 zone id that hosts the external DNS record"
+  type        = "string"
+}
+
+variable "server_instance_type" {
+  description = "This defines the default server EC2 instance type"
+  type        = "string"
+  default     = "t2.small"
 }
 
 variable "server_name" {
@@ -112,6 +96,17 @@ variable "server_root_volume_size" {
   description = "Size of the Jenkins Server root volume (GB)"
   type        = "string"
   default     = "50"
+}
+
+variable "server_user_data" {
+  description = "Link to cloud init file containing setup information for Jenkins master instance. You do not need to set this - it defaults to a sensible value"
+  type        = "string"
+  default     = ""
+}
+
+variable "ssh_public_key_file" {
+  description = "Path to your ssh public key file"
+  type        = "string"
 }
 
 variable "team_name" {
@@ -144,11 +139,8 @@ variable "worker_root_volume_size" {
   default     = "50"
 }
 
-# #### Advanced preferences ####
-
-# Only touch these if you know what you're doing!
-variable "user_data" {
-  description = "Link to cloud init file containing setup information for Jenkins worker server instance. You do not need to set this - it defaults to a sensible value"
+variable "worker_user_data" {
+  description = "Link to cloud init file containing setup information for Jenkins worker instance. You do not need to set this - it defaults to a sensible value"
   type        = "string"
   default     = ""
 }

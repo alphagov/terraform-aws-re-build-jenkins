@@ -2,10 +2,11 @@ resource "aws_efs_file_system" "jenkins2_efs_server" {
   creation_token = "efs-${var.server_name}.${var.environment}.${var.team_name}"
 
   tags {
-    Name        = "efs-${var.server_name}.${var.environment}.${var.team_name}"
-    ManagedBy   = "terraform"
-    Team        = "${var.team_name}"
-    Environment = "${var.environment}"
+    AvailabilityZone = "${local.configured_az}"
+    Environment      = "${var.environment}"
+    ManagedBy        = "terraform"
+    Name             = "efs-${var.server_name}.${var.environment}.${var.team_name}"
+    Team             = "${var.team_name}"
   }
 }
 

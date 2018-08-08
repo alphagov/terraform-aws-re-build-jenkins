@@ -82,7 +82,7 @@ variable "route53_team_zone_id" {
 }
 
 variable "server_instance_type" {
-  description = "This defines the default server EC2 instance type"
+  description = "This defines the default master server EC2 instance type"
   type        = "string"
   default     = "t2.small"
 }
@@ -116,7 +116,7 @@ variable "ubuntu_release" {
 }
 
 variable "worker_instance_type" {
-  description = "This defines the default (AWS) instance type"
+  description = "This defines the default worker server EC2 instance type"
   type        = "string"
   default     = "t2.medium"
 }

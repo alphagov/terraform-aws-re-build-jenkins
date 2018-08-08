@@ -90,6 +90,7 @@ variable "server_instance_type" {
 variable "server_name" {
   description = "Name of the jenkins2 server"
   type        = "string"
+  default     = "jenkins2"
 }
 
 variable "server_root_volume_size" {
@@ -106,7 +107,6 @@ variable "ssh_public_key_file" {
 variable "team_name" {
   description = "Team Name"
   type        = "string"
-  default     = "team2"
 }
 
 variable "ubuntu_release" {

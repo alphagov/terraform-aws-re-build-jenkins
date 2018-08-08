@@ -4,7 +4,7 @@ variable "allowed_ips" {
 }
 
 variable "az" {
-  description = "Single AWS availability zone to place master and worker instances in (a,b,ci)"
+  description = "Single AWS availability zone to place master and worker instances in (a,b,c)"
   type        = "string"
 }
 

@@ -45,7 +45,7 @@ variable "github_organisations" {
 variable "gitrepo" {
   description = "Git repository to clone in the default user_data when creating EC2 instances. This defaults to the https://github.com/alphagov/terraform-aws-re-build-jenkins repository"
   type        = "string"
-  default     = "https://github.com/alphagov/terraform-aws-re-build-jenkins"
+  default     = "https://github.com/alphagov/re-build-systems.git"
 }
 
 variable "gitrepo_branch" {

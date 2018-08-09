@@ -195,17 +195,17 @@ apt_sources:
       =0TfX
       -----END PGP PUBLIC KEY BLOCK-----
 bootcmd:
-  - [ sh, -c, echo "Starting Jenkins2 Master Server" ]
+  - echo "Starting Jenkins2 Master Server"
 runcmd:
-  - echo "append domain-search \"${awsenv}.${team}.internal\";" >> /etc/dhcp/dhclient.conf
+  - echo "append domain-search \"${awsenv}.${team}.${awsaz}.internal\";" >> /etc/dhcp/dhclient.conf
   - dhclient -r; dhclient
-  - echo "search ${awsenv}.${team}.internal" >> /etc/resolvconf/resolv.conf.d/base
-  - [ apt-get, update ]
-  - [ apt-get, upgrade ]
-  - apt-get install -y docker-ce=${dockerversion}
-  - [ systemctl, status, docker ]
-  - [ apt-get, -y, install, netcat ]
-  - [ mkdir, /docker ]
+  - echo "search ${awsenv}.${team}.${awsaz}.internal" >> /etc/resolvconf/resolv.conf.d/base
+  - apt-get update
+  - apt-get upgrade
+  - apt-get install -y docker-ce=${docker_version}
+  - systemctl status docker
+  - apt-get -y install netcat
+  - mkdir /docker
   - git clone -b ${gitrepo_branch} ${gitrepo} /docker
   - mkdir -p /mnt/jenkins-efs
   - apt-get -y install /docker/terraform/packages/amazon-efs-utils*deb
@@ -214,6 +214,6 @@ runcmd:
   - sleep 90
   - mount -a -t efs defaults
   - chown 1000:1000 /mnt/jenkins-efs
-  - [ docker, build, -t=jenkins/jenkins-re, "/docker/docker" ]
-  - [ mv, /tmp/gitvars, /docker/gitvars ]
-  - [ docker, run, --name, myjenkins, -d, -p, "80:80", -p, "50000:50000", -p, "8080:8080", --env-file, "/docker/gitvars", -v, "/mnt/jenkins-efs:/var/jenkins_home", "jenkins/jenkins-re:latest" ]
+  - docker build -t=jenkins/jenkins-re /docker/docker
+  - mv /tmp/gitvars /docker/gitvars
+  - docker run --name myjenkins -d -p 80:80 -p 50000:50000 -p 8080:8080 --env-file /docker/gitvars -v /mnt/jenkins-efs:/var/jenkins_home jenkins/jenkins-re:${jenkins_version}

@@ -1,6 +1,11 @@
 locals {
   asg_jenkins2_extra_tags = [
     {
+      key                 = "AvailabilityZone"
+      value               = "${local.configured_az}"
+      propagate_at_launch = true
+    },
+    {
       key                 = "Environment"
       value               = "${var.environment}"
       propagate_at_launch = true
@@ -34,14 +39,16 @@ data "template_file" "jenkins2_asg_server_template" {
   depends_on = ["aws_efs_file_system.jenkins2_efs_server"]
 
   vars {
+    awsaz                = "${local.configured_az}"
     awsenv               = "${var.environment}"
-    dockerversion        = "${var.dockerversion}"
+    docker_version       = "${var.docker_version}"
     efs_file_system      = "${aws_efs_file_system.jenkins2_efs_server.id}"
     fqdn                 = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
     gitrepo              = "${var.gitrepo}"
     gitrepo_branch       = "${var.gitrepo_branch}"
     hostname             = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    region               = "${var.aws_region}"
+    jenkins_version      = "${var.jenkins_version}"
+    region               = "${local.configured_region}"
     team                 = "${var.team_name}"
     github_admin_users   = "${join(",", var.github_admin_users)}"
     github_client_id     = "${var.github_client_id}"
@@ -53,7 +60,7 @@ data "template_file" "jenkins2_asg_server_template" {
 resource "aws_launch_configuration" "lc_jenkins2_server" {
   name_prefix   = "lc-${var.server_name}.${var.environment}.${var.team_name}-"
   image_id      = "${data.aws_ami.source.id}"
-  instance_type = "${var.instance_type}"
+  instance_type = "${var.server_instance_type}"
 
   # associate_public_ip_address = true
   user_data = "${data.template_file.jenkins2_asg_server_template.rendered}"
@@ -119,10 +126,11 @@ resource "aws_elb" "elb_jenkins2_server" {
   }
 
   tags {
-    Environment = "${var.environment}"
-    ManagedBy   = "terraform"
-    Name        = "jenkins2_elb_${var.team_name}_${var.environment}"
-    Team        = "${var.team_name}"
+    AvailabilityZone = "${local.configured_az}"
+    Environment      = "${var.environment}"
+    ManagedBy        = "terraform"
+    Name             = "jenkins2_elb_${var.team_name}_${var.environment}"
+    Team             = "${var.team_name}"
   }
 }
 

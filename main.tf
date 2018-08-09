@@ -2,10 +2,19 @@ terraform {
   required_version = "= 0.11.7"
 }
 
-provider "aws" {
-  version = "~> 1.11.0"
-  region  = "${var.aws_region}"
+data "aws_region" "provider_region" {}
+data "aws_availability_zones" "provider_az" {}
 
-  # shared_credentials_file = "~/.aws/credentials"
-  profile = "${var.aws_profile}"
+locals {
+  configured_region = "${
+    length(var.region) == 0
+    ? data.aws_region.provider_region.name
+    : var.region
+  }"
+
+  configured_az = "${
+    length(var.az) == 0
+    ? data.aws_availability_zones.provider_az.names[1]
+    : var.az
+  }"
 }

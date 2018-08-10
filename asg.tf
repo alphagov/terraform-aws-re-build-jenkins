@@ -139,9 +139,9 @@ resource "aws_autoscaling_attachment" "asg_attachment_to_elb" {
   elb                    = "${aws_elb.elb_jenkins2_server.id}"
 }
 
-resource "aws_route53_record" "dns_record_asg" {
+resource "aws_route53_record" "dns_record_top" {
   zone_id = "${var.route53_team_zone_id}"
-  name    = "asg.${var.environment}"
+  name    = "${var.environment}"
   type    = "A"
 
   alias {

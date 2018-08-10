@@ -1,6 +1,6 @@
 output "github_callback_url" {
   description = "Callback uri for Github authentication flow"
-  value       = "https://${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}/securityRealm/finishLogin"
+  value       = "https://${var.environment}.${var.team_name}.${var.hostname_suffix}/securityRealm/finishLogin"
 }
 
 output "image_id" {
@@ -15,7 +15,7 @@ output "public_subnets" {
 
 output "jenkins2_url" {
   description = "URL of Jenkins instance"
-  value       = "https://${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
+  value       = "https://${var.environment}.${var.team_name}.${var.hostname_suffix}"
 }
 
 output "jenkins2_vpc_id" {

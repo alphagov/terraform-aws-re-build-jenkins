@@ -1,11 +1,11 @@
 locals {
   san_domains = [
-    "asg.${var.environment}.${var.team_name}.${var.hostname_suffix}",
+    "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}",
   ]
 }
 
 resource "aws_acm_certificate" "tls_certificate" {
-  domain_name               = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
+  domain_name               = "${var.environment}.${var.team_name}.${var.hostname_suffix}"
   validation_method         = "DNS"
   subject_alternative_names = "${local.san_domains}"
 

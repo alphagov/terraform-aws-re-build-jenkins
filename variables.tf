@@ -59,12 +59,6 @@ variable "hostname_suffix" {
   type        = "string"
 }
 
-variable "jenkins_version" {
-  description = "Verson of jenkins to install"
-  type        = "string"
-  default     = "2.121.2"
-}
-
 variable "public_subnet_cidr" {
   description = "CIDR blocks for public subnet"
   type        = "string"

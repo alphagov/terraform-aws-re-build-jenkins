@@ -15,7 +15,8 @@ write_files:
       GITHUB_CLIENT_ID=${github_client_id}
       GITHUB_CLIENT_SECRET=${github_client_secret}
       GITHUB_ORGANISATIONS=${github_organisations}
-    path: '/tmp/gitvars'
+      JENKINS_URL=${jenkins_url}
+    path: '/tmp/jenkinsvars'
     owner: "ubuntu:ubuntu"
     permissions: '0400'
 apt_preserve_sources_list: true
@@ -215,5 +216,5 @@ runcmd:
   - mount -a -t efs defaults
   - chown 1000:1000 /mnt/jenkins-efs
   - docker build -t=jenkins/jenkins-re /docker/docker
-  - mv /tmp/gitvars /docker/gitvars
-  - docker run --name myjenkins -d -p 80:80 -p 50000:50000 -p 8080:8080 --env-file /docker/gitvars -v /mnt/jenkins-efs:/var/jenkins_home jenkins/jenkins-re:${jenkins_version}
+  - mv /tmp/jenkinsvars /docker/jenkinsvars
+  - docker run --name myjenkins -d -p 80:80 -p 50000:50000 -p 8080:8080 --env-file /docker/jenkinsvars -v /mnt/jenkins-efs:/var/jenkins_home jenkins/jenkins-re:${jenkins_version}

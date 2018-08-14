@@ -54,6 +54,7 @@ data "template_file" "jenkins2_asg_server_template" {
     github_client_id     = "${var.github_client_id}"
     github_client_secret = "${var.github_client_secret}"
     github_organisations = "${join(",", var.github_organisations)}"
+    jenkins_url          = "https://${var.environment}.${var.team_name}.${var.hostname_suffix}/"
   }
 }
 

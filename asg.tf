@@ -34,7 +34,7 @@ locals {
 }
 
 data "template_file" "jenkins2_asg_server_template" {
-  template = "${file("${path.module}/cloud-init/server-asg-${var.ubuntu_release}.yaml")}"
+  template = "${file("${path.module}/cloud-init/server-asg-${local.ubuntu_release}.yaml")}"
 
   depends_on = ["aws_efs_file_system.jenkins2_efs_server"]
 

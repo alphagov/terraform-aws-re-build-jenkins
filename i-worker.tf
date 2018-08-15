@@ -27,7 +27,7 @@ module "jenkins2_worker" {
 }
 
 data "template_file" "jenkins2_worker_template" {
-  template = "${file("${path.module}/cloud-init/worker-${var.ubuntu_release}.yaml")}"
+  template = "${file("${path.module}/cloud-init/worker-${local.ubuntu_release}.yaml")}"
 
   vars {
     awsaz          = "${local.configured_az}"

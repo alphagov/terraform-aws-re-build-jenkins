@@ -208,7 +208,7 @@ runcmd:
   - echo "search ${awsenv}.${team}.${awsaz}.internal" >> /etc/resolvconf/resolv.conf.d/base
   - apt-get update
   - apt-get upgrade
-  - apt-get install -y docker-ce=${docker_version}
+  - apt-get install -y docker-ce
   - service docker stop
   - mkdir -p /etc/systemd/system/docker.service.d
   - mv /tmp/daemon.json /etc/docker

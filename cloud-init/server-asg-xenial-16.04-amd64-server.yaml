@@ -203,7 +203,7 @@ runcmd:
   - echo "search ${awsenv}.${team}.${awsaz}.internal" >> /etc/resolvconf/resolv.conf.d/base
   - apt-get update
   - apt-get upgrade
-  - apt-get install -y docker-ce=${docker_version}
+  - apt-get install -y docker-ce
   - systemctl status docker
   - apt-get -y install netcat
   - mkdir /docker

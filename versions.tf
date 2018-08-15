@@ -1,3 +1,3 @@
 locals {
-	jenkins_version = "2.121.2"
+  jenkins_version = "2.121.2"
 }

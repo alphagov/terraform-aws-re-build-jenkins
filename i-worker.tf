@@ -30,12 +30,11 @@ data "template_file" "jenkins2_worker_template" {
   template = "${file("${path.module}/cloud-init/worker-${local.ubuntu_release}.yaml")}"
 
   vars {
-    awsaz          = "${local.configured_az}"
-    awsenv         = "${var.environment}"
-    docker_version = "${var.docker_version}"
-    fqdn           = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    hostname       = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    team           = "${var.team_name}"
+    awsaz    = "${local.configured_az}"
+    awsenv   = "${var.environment}"
+    fqdn     = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
+    hostname = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
+    team     = "${var.team_name}"
   }
 }
 

@@ -8,11 +8,6 @@ variable "az" {
   type        = "string"
 }
 
-variable "docker_version" {
-  description = "Docker version to install"
-  type        = "string"
-}
-
 variable "environment" {
   description = "Environment (test, staging, production, etc)"
   type        = "string"

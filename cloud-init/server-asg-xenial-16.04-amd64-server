@@ -27,6 +27,7 @@ EOF
 chown root:root /etc/systemd/system/docker.service.d/override.conf
 chmod 0644 /etc/systemd/system/docker.service.d/override.conf
 mkdir /docker
+git clone -b ${gitrepo_branch} ${gitrepo} /docker
 cat << EOF > /docker/jenkinsvars
 GITHUB_ADMIN_USERS=${github_admin_users}
 GITHUB_CLIENT_ID=${github_client_id}
@@ -37,7 +38,6 @@ EOF
 chown ubuntu:ubuntu /docker/jenkinsvars
 chmod 0400 /docker/jenkinsvars
 systemctl daemon-reload
-git clone -b ${gitrepo_branch} ${gitrepo} /docker
 mkdir -p /mnt/jenkins-efs
 apt-get -y install /docker/terraform/packages/amazon-efs-utils*deb
 echo "${efs_file_system}:/ /mnt/jenkins-efs efs tls,_netdev" >> /etc/fstab

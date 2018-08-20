@@ -209,7 +209,7 @@ runcmd:
   - mkdir /docker
   - git clone -b ${gitrepo_branch} ${gitrepo} /docker
   - mkdir -p /mnt/jenkins-efs
-  - apt-get -y install /docker/terraform/packages/amazon-efs-utils*deb
+  - apt-get -y install /docker/packages/amazon-efs-utils*deb
   - echo "${efs_file_system}:/ /mnt/jenkins-efs efs tls,_netdev" >> /etc/fstab
   - echo "Waiting 90 seconds before mounting EFS"
   - sleep 90

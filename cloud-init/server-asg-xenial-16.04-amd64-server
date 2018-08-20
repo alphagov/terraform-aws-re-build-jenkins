@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+hostname ${hostname}
+locale-gen en_GB.UTF-8
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+echo "Starting Jenkins2 Master Server"
+echo "append domain-search \"${awsenv}.${team}.${awsaz}.internal\";" >> /etc/dhcp/dhclient.conf
+dhclient -r; dhclient
+echo "search ${awsenv}.${team}.${awsaz}.internal" >> /etc/resolvconf/resolv.conf.d/base
+apt-get update
+apt-get upgrade
+apt-get install -y docker-ce netcat
+service docker stop
+mkdir -p /etc/systemd/system/docker.service.d
+cat << EOF > /etc/systemd/system/docker.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd
+EOF
+chown root:root /etc/systemd/system/docker.service.d/override.conf
+chmod 0644 /etc/systemd/system/docker.service.d/override.conf
+mkdir /docker
+git clone -b ${gitrepo_branch} ${gitrepo} /docker
+cat << EOF > /docker/jenkinsvars
+GITHUB_ADMIN_USERS=${github_admin_users}
+GITHUB_CLIENT_ID=${github_client_id}
+GITHUB_CLIENT_SECRET=${github_client_secret}
+GITHUB_ORGANISATIONS=${github_organisations}
+JENKINS_URL=${jenkins_url}
+EOF
+chown ubuntu:ubuntu /docker/jenkinsvars
+chmod 0400 /docker/jenkinsvars
+systemctl daemon-reload
+mkdir -p /mnt/jenkins-efs
+apt-get -y install /docker/packages/amazon-efs-utils*deb
+echo "${efs_file_system}:/ /mnt/jenkins-efs efs tls,_netdev" >> /etc/fstab
+echo "Waiting 90 seconds before mounting EFS"
+sleep 90
+mount -a -t efs defaults
+chown 1000:1000 /mnt/jenkins-efs
+service docker start
+docker build -t=jenkins/jenkins-re /docker/docker
+docker run --name myjenkins -d -p 80:80 -p 50000:50000 -p 8080:8080 --env-file /docker/jenkinsvars -v /mnt/jenkins-efs:/var/jenkins_home jenkins/jenkins-re:${jenkins_version}

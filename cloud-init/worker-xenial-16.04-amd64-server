@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+hostname ${hostname}
+locale-gen en_GB.UTF-8
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+echo "Starting Jenkins2 Worker Server"
+echo "append domain-search \"${awsenv}.${team}.${awsaz}.internal\";" >> /etc/dhcp/dhclient.conf
+dhclient -r; dhclient
+echo "search ${awsenv}.${team}.${awsaz}.internal" >> /etc/resolvconf/resolv.conf.d/base
+apt-get update
+apt-get upgrade
+apt-get install -y docker-ce
+service docker stop
+cat << EOF > /etc/docker/daemon.json
+{
+  "hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]
+}
+EOF
+chown root:root /etc/docker/daemon.json
+chmod 0644 /etc/docker/daemon.json
+mkdir -p /etc/systemd/system/docker.service.d
+cat << EOF > /etc/systemd/system/docker.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd
+EOF
+chown root:root /etc/systemd/system/docker.service.d/override.conf
+chmod 0644 /etc/systemd/system/docker.service.d/override.conf
+systemctl daemon-reload
+service docker start

@@ -11,7 +11,6 @@ apt-get update
 apt-get upgrade
 apt-get install -y docker-ce
 service docker stop
-mkdir -p /etc/systemd/system/docker.service.d
 cat << EOF > /etc/docker/daemon.json
 {
   "hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]
@@ -19,6 +18,7 @@ cat << EOF > /etc/docker/daemon.json
 EOF
 chown root:root /etc/docker/daemon.json
 chmod 0644 /etc/docker/daemon.json
+mkdir -p /etc/systemd/system/docker.service.d
 cat << EOF > /etc/systemd/system/docker.service.d/override.conf
 [Service]
 ExecStart=

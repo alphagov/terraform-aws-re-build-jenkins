@@ -39,5 +39,5 @@ sleep 90
 mount -a -t efs defaults
 chown 1000:1000 /mnt/jenkins-efs
 service docker start
-docker build -t=jenkins/jenkins-re:${jenkins_version} --build-arg JENKINS_VERSION=${jenkins_version} /docker/docker
+docker build -t=jenkins/jenkins-re /docker/docker
 docker run --name myjenkins -d -p 80:80 -p 50000:50000 -p 8080:8080 --env-file /docker/jenkinsvars -v /mnt/jenkins-efs:/var/jenkins_home jenkins/jenkins-re:${jenkins_version}

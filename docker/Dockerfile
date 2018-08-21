@@ -1,5 +1,4 @@
-ARG JENKINS_VERSION
-FROM jenkins/jenkins:${JENKINS_VERSION}
+FROM jenkins/jenkins:lts
 
 # 80 = nginx
 # 8080 = jenkins

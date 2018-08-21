@@ -33,37 +33,13 @@ locals {
   ]
 }
 
-data "template_file" "jenkins2_asg_server_template" {
-  template = "${file("${path.module}/cloud-init/server-asg-${local.ubuntu_release}")}"
-
-  depends_on = ["aws_efs_file_system.jenkins2_efs_server"]
-
-  vars {
-    awsaz                = "${local.configured_az}"
-    awsenv               = "${var.environment}"
-    efs_file_system      = "${aws_efs_file_system.jenkins2_efs_server.id}"
-    fqdn                 = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    gitrepo              = "${var.gitrepo}"
-    gitrepo_branch       = "${var.gitrepo_branch}"
-    hostname             = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    jenkins_version      = "${local.jenkins_version}"
-    region               = "${local.configured_region}"
-    team                 = "${var.team_name}"
-    github_admin_users   = "${join(",", var.github_admin_users)}"
-    github_client_id     = "${var.github_client_id}"
-    github_client_secret = "${var.github_client_secret}"
-    github_organisations = "${join(",", var.github_organisations)}"
-    jenkins_url          = "https://${var.environment}.${var.team_name}.${var.hostname_suffix}/"
-  }
-}
-
 resource "aws_launch_configuration" "lc_jenkins2_server" {
   name_prefix   = "lc-${var.server_name}.${var.environment}.${var.team_name}-"
   image_id      = "${data.aws_ami.source.id}"
   instance_type = "${var.server_instance_type}"
 
   # associate_public_ip_address = true
-  user_data = "${data.template_file.jenkins2_asg_server_template.rendered}"
+  user_data = "${data.template_cloudinit_config.server_cloud_init.rendered}"
   key_name  = "jenkins2_key_${var.team_name}_${var.environment}"
 
   security_groups = ["${module.jenkins2_sg_asg_server_internet_facing.this_security_group_id}", "${module.jenkins2_sg_asg_server_internal.this_security_group_id}"]

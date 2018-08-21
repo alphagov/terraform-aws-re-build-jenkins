@@ -5,7 +5,7 @@ module "jenkins2_worker" {
   ami                         = "${data.aws_ami.source.id}"
   instance_type               = "${var.worker_instance_type}"
   associate_public_ip_address = true
-  user_data                   = "${data.template_file.jenkins2_worker_template.rendered}"
+  user_data                   = "${data.template_cloudinit_config.jenkins2_worker_cloud_init.rendered}"
   key_name                    = "jenkins2_key_${var.team_name}_${var.environment}"
   monitoring                  = true
   vpc_security_group_ids      = ["${module.jenkins2_sg_worker.this_security_group_id}"]
@@ -23,18 +23,6 @@ module "jenkins2_worker" {
     Name             = "jenkins2_worker_ec2_${var.team_name}_${var.environment}"
     Team             = "${var.team_name}"
     Type             = "Jenkins-worker"
-  }
-}
-
-data "template_file" "jenkins2_worker_template" {
-  template = "${file("${path.module}/cloud-init/worker-${local.ubuntu_release}")}"
-
-  vars {
-    awsaz    = "${local.configured_az}"
-    awsenv   = "${var.environment}"
-    fqdn     = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    hostname = "${var.worker_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    team     = "${var.team_name}"
   }
 }
 

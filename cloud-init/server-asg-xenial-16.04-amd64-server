@@ -28,6 +28,7 @@ GITHUB_CLIENT_SECRET=${github_client_secret}
 GITHUB_ORGANISATIONS=${github_organisations}
 JENKINS_URL=${jenkins_url}
 EOF
+echo '${custom_groovy_script}' >> /docker/docker/files/groovy/99-custom.groovy"
 chown ubuntu:ubuntu /docker/jenkinsvars
 chmod 0400 /docker/jenkinsvars
 systemctl daemon-reload

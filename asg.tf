@@ -41,6 +41,7 @@ data "template_file" "jenkins2_asg_server_template" {
   vars {
     awsaz                = "${local.configured_az}"
     awsenv               = "${var.environment}"
+    custom_groovy_script = "${file("${var.custom_groovy_script}")}"
     efs_file_system      = "${aws_efs_file_system.jenkins2_efs_server.id}"
     fqdn                 = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
     gitrepo              = "${var.gitrepo}"

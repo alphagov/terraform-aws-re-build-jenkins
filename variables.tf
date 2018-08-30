@@ -8,6 +8,12 @@ variable "az" {
   type        = "string"
 }
 
+variable "custom_groovy_script" {
+  description = "Custom groovy script to run at end of jenkins configuration"
+  type        = "string"
+  default     = ""
+}
+
 variable "environment" {
   description = "Environment (test, staging, production, etc)"
   type        = "string"

@@ -9,7 +9,7 @@ variable "az" {
 }
 
 variable "custom_groovy_script" {
-  description = "Path to custom groovy script to run at end of jenkins configuration"
+  description = "Custom groovy script to run at end of jenkins configuration"
   type        = "string"
   default     = ""
 }

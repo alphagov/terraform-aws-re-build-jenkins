@@ -22,7 +22,7 @@ chmod 0644 /etc/systemd/system/docker.service.d/override.conf
 mkdir /docker
 git clone -b ${gitrepo_branch} ${gitrepo} /docker
 cat << EOF > /docker/jenkinsvars
-GITHUB_ADMIN_USERS=${github_admin_users}
+JENKINS_ADMIN_USERS_GITHUB_USERNAMES=${jenkins_admin_users_github_usernames}
 GITHUB_CLIENT_ID=${github_client_id}
 GITHUB_CLIENT_SECRET=${github_client_secret}
 GITHUB_ORGANISATIONS=${github_organisations}

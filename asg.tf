@@ -50,7 +50,7 @@ data "template_file" "jenkins2_asg_server_template" {
     jenkins_version      = "${local.jenkins_version}"
     region               = "${local.configured_region}"
     team                 = "${var.team_name}"
-    github_admin_users   = "${join(",", var.github_admin_users)}"
+    jenkins_admin_users_github_usernames   = "${join(",", var.jenkins_admin_users_github_usernames)}"
     github_client_id     = "${var.github_client_id}"
     github_client_secret = "${var.github_client_secret}"
     github_organisations = "${join(",", var.github_organisations)}"

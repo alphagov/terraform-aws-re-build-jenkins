@@ -5,7 +5,7 @@ module "jenkins2_worker" {
   ami                         = "${data.aws_ami.source.id}"
   instance_type               = "${var.worker_instance_type}"
   associate_public_ip_address = true
-  user_data                   = "${data.template_file.jenkins2_worker_template.rendered}"
+  user_data                   = "${join("\n\n", list(data.template_file.jenkins2_worker_template.rendered, length(var.append_worker_user_data) == 0 ? "" : file(var.append_worker_user_data)))}"
   key_name                    = "jenkins2_key_${var.team_name}_${var.environment}"
   monitoring                  = true
   vpc_security_group_ids      = ["${module.jenkins2_sg_worker.this_security_group_id}"]

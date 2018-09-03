@@ -64,7 +64,7 @@ resource "aws_launch_configuration" "lc_jenkins2_server" {
   instance_type = "${var.server_instance_type}"
 
   # associate_public_ip_address = true
-  user_data = "${data.template_file.jenkins2_asg_server_template.rendered}"
+  user_data = "${join("\n\n", list(data.template_file.jenkins2_asg_server_template.rendered, length(var.append_server_user_data) == 0 ? "" : file(var.append_server_user_data)))}"
   key_name  = "jenkins2_key_${var.team_name}_${var.environment}"
 
   security_groups = ["${module.jenkins2_sg_asg_server_internet_facing.this_security_group_id}", "${module.jenkins2_sg_asg_server_internal.this_security_group_id}"]

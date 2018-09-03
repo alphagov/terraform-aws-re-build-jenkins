@@ -36,7 +36,7 @@ def env = System.getenv()
 
 //permissions are ordered similar to web UI
 // Admin User Names
-String adminUserNames = env['GITHUB_ADMIN_USERS']
+String adminUserNames = env['JENKINS_ADMIN_USERS_GITHUB_USERNAMES']
 
 // Participant in Organisation
 String organisationNames = env['GITHUB_ORGANISATIONS']
@@ -72,8 +72,8 @@ String oauthScopes = "read:org"
 // check github auth details are not blank
 if ((clientID == null) || (clientSecret == null) || (adminUserNames == null) || (organisationNames == null)) {
   // Print to stdout and stderr.
-  System.err.println "Github OAuth2 is not being set up because one or more of the GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_ADMIN_USERS or GITHUB_ORGANISATIONS environment variables have not been set."
-  println "Github OAuth2 is not being set up because one or more of the GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_ADMIN_USERS or GITHUB_ORGANISATIONS environment variables have not been set."
+  System.err.println "Github OAuth2 is not being set up because one or more of the GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, JENKINS_ADMIN_USERS_GITHUB_USERNAMES or GITHUB_ORGANISATIONS environment variables have not been set."
+  println "Github OAuth2 is not being set up because one or more of the GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, JENKINS_ADMIN_USERS_GITHUB_USERNAMES or GITHUB_ORGANISATIONS environment variables have not been set."
 } else {
   SecurityRealm github_security_realm = new GithubSecurityRealm(
     githubWebUri,

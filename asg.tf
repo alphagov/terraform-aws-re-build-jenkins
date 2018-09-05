@@ -89,9 +89,9 @@ resource "aws_autoscaling_group" "asg_jenkins2_server" {
   min_size                  = 1
   max_size                  = 1
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  #lifecycle {
+  #  create_before_destroy = true
+  #}
 
   tags = ["${local.asg_jenkins2_extra_tags}"]
 }

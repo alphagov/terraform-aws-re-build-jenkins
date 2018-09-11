@@ -5,7 +5,13 @@ import com.nirima.jenkins.plugins.docker.launcher.AttachedDockerComputerLauncher
 import io.jenkins.docker.connector.DockerComputerAttachConnector
 import jenkins.model.Jenkins
 
-// parameters
+// Customise these variables as needed
+def imageDockerPath = 'gdsre/jenkins-agent-java8-with-maven:latest'
+def dockerTemplateLabel = 'sample-docker-jnlp-java-agent'
+def dockerCloudName = 'sample-docker-worker--java'
+
+// Advanced settings - you should not need to change these
+
 def dockerTemplateBaseParameters = [
   bindAllPorts:       false,
   bindPorts:          '',
@@ -15,7 +21,7 @@ def dockerTemplateBaseParameters = [
   environmentsString: '',
   extraHostsString:   '',
   hostname:           '',
-  image:              'danieleocchipinti/jenkins-agent-java8-with-maven:latest', // custom image
+  image:              imageDockerPath,
   macAddress:         '',
   memoryLimit:        null,
   memorySwap:         null,
@@ -29,7 +35,7 @@ def dockerTemplateBaseParameters = [
 
 def DockerTemplateParameters = [
   instanceCapStr: '4',
-  labelString:    'sample-docker-jnlp-java-agent', // custom labelString
+  labelString:    dockerTemplateLabel,
   remoteFs:       ''
 ]
 
@@ -38,9 +44,9 @@ def dockerCloudParameters = [
   containerCapStr:  '4',
   credentialsId:    '',
   dockerHostname:   '',
-  name:             'sample-docker-worker--java', // custom name
+  name:             dockerCloudName,
   readTimeout:      60,
-  serverUrl:        'tcp://worker:2375', // custom serverUrl
+  serverUrl:        'tcp://worker:2375',
   version:          ''
 ]
 

@@ -25,7 +25,7 @@ COPY files/plugins.txt /usr/share/jenkins/ref/plugins.txt
 # enable logging
 COPY files/log.properties /usr/share/jenkins/ref/log.properties
 
-# copy jenkins groovy configuration and job scripts
+# copy jenkins groovy configuration
 COPY files/groovy/*.groovy /usr/share/jenkins/ref/init.groovy.d/
 
 # fix permissions

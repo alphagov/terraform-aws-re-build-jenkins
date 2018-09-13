@@ -28,7 +28,7 @@ GITHUB_CLIENT_SECRET=${github_client_secret}
 GITHUB_ORGANISATIONS=${github_organisations}
 JENKINS_URL=${jenkins_url}
 EOF
-cat << EOF-re-build-systems > /docker/docker/files/groovy/zz-custom.groovy
+cat << EOF-re-build-systems > /docker/docker/files/groovy/zzcustom.groovy
 ${custom_groovy_script}
 EOF-re-build-systems
 chown ubuntu:ubuntu /docker/jenkinsvars

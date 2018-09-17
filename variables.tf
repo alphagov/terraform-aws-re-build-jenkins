@@ -22,25 +22,21 @@ variable "environment" {
 variable "jenkins_admin_users_github_usernames" {
   description = "List of Jenkins admin users' Github usernames"
   type        = "list"
-  default     = []
 }
 
 variable "github_client_id" {
   description = "Your Github client Id"
   type        = "string"
-  default     = ""
 }
 
 variable "github_client_secret" {
   description = "Your Github client secret"
   type        = "string"
-  default     = ""
 }
 
 variable "github_organisations" {
   description = "List of Github organisations and teams that users must be a member of to allow HTTPS login to master"
   type        = "list"
-  default     = []
 }
 
 variable "gitrepo" {

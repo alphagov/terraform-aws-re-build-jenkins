@@ -11,13 +11,13 @@ module "jenkins2_sg_worker" {
   ingress_cidr_blocks = ["${var.public_subnet_cidr}"]
   ingress_rules       = ["ssh-tcp"]
 
-  ingress_with_cidr_blocks = [
+  ingress_with_source_security_group_id = [
     {
-      from_port   = 2375
-      to_port     = 2375
-      protocol    = "tcp"
-      description = "Server connecting to Docker API"
-      cidr_blocks = "${var.public_subnet_cidr}"
+      from_port                = 2375
+      to_port                  = 2375
+      protocol                 = "tcp"
+      description              = "Server connecting to Docker API"
+      source_security_group_id = "${module.jenkins2_sg_asg_server_internal.this_security_group_id}"
     },
   ]
 }

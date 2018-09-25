@@ -39,22 +39,22 @@ data "template_file" "jenkins2_asg_server_template" {
   depends_on = ["aws_efs_file_system.jenkins2_efs_server"]
 
   vars {
-    awsaz                = "${local.configured_az}"
-    awsenv               = "${var.environment}"
-    custom_groovy_script = "${var.custom_groovy_script}"
-    efs_file_system      = "${aws_efs_file_system.jenkins2_efs_server.id}"
-    fqdn                 = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    gitrepo              = "${var.gitrepo}"
-    gitrepo_branch       = "${var.gitrepo_branch}"
-    hostname             = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
-    jenkins_version      = "${local.jenkins_version}"
-    region               = "${local.configured_region}"
-    team                 = "${var.team_name}"
+    awsaz                                = "${local.configured_az}"
+    awsenv                               = "${var.environment}"
+    custom_groovy_script                 = "${var.custom_groovy_script}"
+    efs_file_system                      = "${aws_efs_file_system.jenkins2_efs_server.id}"
+    fqdn                                 = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
+    gitrepo                              = "${var.gitrepo}"
+    gitrepo_branch                       = "${var.gitrepo_branch}"
+    hostname                             = "${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
+    jenkins_version                      = "${local.jenkins_version}"
+    region                               = "${local.configured_region}"
+    team                                 = "${var.team_name}"
     jenkins_admin_users_github_usernames = "${join(",", var.jenkins_admin_users_github_usernames)}"
-    github_client_id     = "${var.github_client_id}"
-    github_client_secret = "${var.github_client_secret}"
-    github_organisations = "${join(",", var.github_organisations)}"
-    jenkins_url          = "https://${var.environment}.${var.team_name}.${var.hostname_suffix}/"
+    github_client_id                     = "${var.github_client_id}"
+    github_client_secret                 = "${var.github_client_secret}"
+    github_organisations                 = "${join(",", var.github_organisations)}"
+    jenkins_url                          = "https://${var.environment}.${var.team_name}.${var.hostname_suffix}/"
   }
 }
 

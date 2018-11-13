@@ -16,14 +16,14 @@ module "jenkins2_worker" {
     delete_on_termination = "true"
   }]
 
-  tags {
-    AvailabilityZone = "${local.configured_az}"
-    Environment      = "${var.environment}"
-    ManagedBy        = "terraform"
-    Name             = "jenkins2_worker_ec2_${var.team_name}_${var.environment}"
-    Team             = "${var.team_name}"
-    Type             = "Jenkins-worker"
-  }
+  tags = "${merge("${var.custom_tags}",
+    map("AvailabilityZone", "${local.configured_az}"),
+    map("Environment", "${var.environment}"),
+    map("ManagedBy", "terraform"),
+    map("Name", "jenkins2_worker_ec2_${var.team_name}_${var.environment}"),
+    map("Team", "${var.team_name}"),
+    map("Type", "Jenkins-worker")
+  )}"
 }
 
 data "template_file" "jenkins2_worker_template" {

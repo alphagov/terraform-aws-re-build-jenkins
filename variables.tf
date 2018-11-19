@@ -129,3 +129,9 @@ variable "append_server_user_data" {
   type        = "string"
   default     = ""
 }
+
+variable "custom_tags" {
+  description = "(Optional) List of custom tags to apply to the resource"
+  type        = "map"
+  default     = {}
+}

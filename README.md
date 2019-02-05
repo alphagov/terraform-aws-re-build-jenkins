@@ -1,3 +1,7 @@
+_This repository is no longer being maintained and no enhancements nor security patches will be made. The repository is part of the [GDS Reliability Engineering Build System](https://github.com/alphagov/re-build-systems) which has been deprecated._
+
+---
+
 # re-build-jenkins
 
 ## Overview
